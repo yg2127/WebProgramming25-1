@@ -1,6 +1,7 @@
 # WebProgramming25-1
 
-webprogramming 수업 25-1 학기 공동작업용 Git입니다.
+webprogramming 수업 25-1 학기 공동작업용 Git입니다. README를 읽고 개인 Branch까지 분기해주세요.
+모르는 부분 있으면 연락 주세요!
 
 브랜치 분기 가이드
 
