@@ -1,22 +1,26 @@
-## 📌 개요
-- 간단한 작업 요약을 작성해주세요.
+⸻
 
-## ✅ 변경 사항
-- 어떤 기능이 추가/변경/삭제되었는지 bullet point로 적어주세요.
-- 관련된 파일이나 클래스도 함께 적어주세요.
+📌 Overview
+	•	Briefly summarize the work you’ve done.
 
-## 🔍 테스트
-- 어떤 테스트를 했는지, 통과 여부를 작성해주세요.
-- 필요시 스크린샷, 로그, 결과 그래프 등 첨부해주세요.
+✅ Changes
+	•	List the features that were added / modified / removed using bullet points.
+	•	Mention relevant files or classes if applicable.
 
-## ⚠️ 특이사항
-- 미완료 항목, 리뷰어가 주의해야 할 점, 관련 이슈 번호 등 작성해주세요.
+🔍 Testing
+	•	Describe what tests you performed and whether they passed.
+	•	Attach screenshots, logs, result graphs, etc., if necessary.
 
----
+⚠️ Notes
+	•	Include any unfinished items, things the reviewer should pay attention to, or related issue numbers.
 
-### 📝 PR 제목 예시
-- ✨ 기능: 이미지 분류 CNN 모델 구현
-- 🐛 버그: 학습 중 데이터 로딩 오류 수정
-- ♻️ 리팩터링: 모델 구조 함수 분리
+⸻
 
-> 이모지 가이드: ✨ 기능 | 🐛 버그 | ♻️ 리팩터링 | 📝 문서 | ✅ 테스트 | 🔥 삭제 | 🚑 핫픽스 | 🚀 성능개선
+📝 Example PR Titles
+	•	✨ Feature: Implemented image classification CNN model
+	•	🐛 Bug: Fixed data loading error during training
+	•	♻️ Refactor: Separated model structure into functions
+
+Emoji Guide: ✨ Feature | 🐛 Bug | ♻️ Refactor | 📝 Docs | ✅ Test | 🔥 Remove | 🚑 Hotfix | 🚀 Performance
+
+⸻
