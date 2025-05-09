@@ -1,56 +1,56 @@
-⸻
+# WebProgramming25-1
 
-WebProgramming25-1
+This repository is for collaborative work in the **Web Programming (Spring 2025)** course.
 
-This is the Git repository for collaborative work in the Web Programming course (Spring 2025).
-Please read the README and create your personal branch based on main.
-If you have any questions, feel free to reach out!
+📌 Please read this README and **create your personal branch** from the `main` branch.  
+If you have any questions, feel free to contact the team leader or the instructor.
 
-⸻
+---
 
-✅ Team Member Branching Guide (main → personal branch)
+## ✅ Branching Guide (main → personal branch)
 
-1️⃣ Clone the repository from GitHub:
+### 1️⃣ Clone the repository
 
-git clone https://github.com/yg2127/DL_study.git
+git clone https://github.com/yg2127/DL_study.git  
 cd DL_study
 
-2️⃣ Switch to the main branch and make sure it’s up-to-date:
+### 2️⃣ Switch to `main` and update it
 
-git checkout main
+git checkout main  
 git pull origin main
 
-3️⃣ Create your personal branch and push it to GitHub:
+### 3️⃣ Create and push your personal branch
 
-git checkout -b yourname   # e.g., minji
+git checkout -b yourname   # e.g., minji  
 git push -u origin yourname
 
-	•	-b creates a new branch
-	•	-u sets the upstream branch (tracks the remote branch)
+- `-b` creates a new branch  
+- `-u` sets upstream tracking to the remote branch
 
-⸻
+---
 
-🧠 Collaboration Tips
-	•	Do not push directly to main! → Only merge via Pull Requests (PR)
-	•	After completing your work, open a PR (Pull Request) on GitHub
-	•	To avoid conflicts, always pull from main before starting your work:
+## 🧠 Collaboration Tips
 
-git checkout main
-git pull origin main
-git checkout your-branch
-git merge main   # or rebase if preferred
+- ❌ **Do NOT push directly to `main`**
+- ✅ Use **Pull Requests (PRs)** to merge changes into `main`
+- 🔄 Before starting any work, **always sync with the latest `main`** to avoid conflicts:
 
+git checkout main  
+git pull origin main  
+git checkout your-branch  
+git merge main   # or use rebase if preferred
 
-⸻
+---
 
-🧩 Git Concepts Summary
-	•	pull = Fetches changes from a remote branch and merges them into your current local branch
-(Only affects main unless you’re on a different branch; your changes on your branch are safe)
-	•	fetch = Downloads changes from the remote repository without modifying your local branches
-	•	merge = Combines changes from one branch into your current branch
-	•	fetch + merge = pull!
-	•	commit = Saves changes to the local repository (a version snapshot)
-	•	push = Uploads your committed changes to the remote repository
-	•	branch = A separate line of development; allows multiple people to work on different features/files independently
+## 🧩 Git Concepts Summary
 
-⸻
+| Command         | Description                                                                 |
+|-----------------|-----------------------------------------------------------------------------|
+| pull            | Fetches and merges changes from the remote branch into your current branch |
+| fetch           | Downloads changes from the remote branch without applying them locally     |
+| merge           | Merges changes from another branch into your current branch                |
+| commit          | Saves your current changes to the local repository                         |
+| push            | Uploads your local commits to the remote repository                        |
+| branch          | Creates a separate line of development for isolated work                   |
+
+---
