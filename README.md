@@ -25,15 +25,15 @@ git pull origin main
 git checkout -b yourname   # e.g., minji
 git push -u origin yourname
 
-	•	-b creates a new branch
-	•	-u sets the upstream branch (tracks the remote branch)
+	- -b creates a new branch
+	- -u sets the upstream branch (tracks the remote branch)
 
 ⸻
 
 🧠 Collaboration Tips
-	•	Do not push directly to main! → Only merge via Pull Requests (PR)
-	•	After completing your work, open a PR (Pull Request) on GitHub
-	•	To avoid conflicts, always pull from main before starting your work:
+	- Do not push directly to main! → Only merge via Pull Requests (PR)
+	- After completing your work, open a PR (Pull Request) on GitHub
+	- To avoid conflicts, always pull from main before starting your work:
 
 git checkout main
 git pull origin main
@@ -44,13 +44,13 @@ git merge main   # or rebase if preferred
 ⸻
 
 🧩 Git Concepts Summary
-	•	pull = Fetches changes from a remote branch and merges them into your current local branch
+	- pull = Fetches changes from a remote branch and merges them into your current local branch
 (Only affects main unless you’re on a different branch; your changes on your branch are safe)
-	•	fetch = Downloads changes from the remote repository without modifying your local branches
-	•	merge = Combines changes from one branch into your current branch
-	•	fetch + merge = pull!
-	•	commit = Saves changes to the local repository (a version snapshot)
-	•	push = Uploads your committed changes to the remote repository
-	•	branch = A separate line of development; allows multiple people to work on different features/files independently
+	- fetch = Downloads changes from the remote repository without modifying your local branches
+	- merge = Combines changes from one branch into your current branch
+	- fetch + merge = pull!
+	- commit = Saves changes to the local repository (a version snapshot)
+	- push = Uploads your committed changes to the remote repository
+	- branch = A separate line of development; allows multiple people to work on different features/files independently
 
 ⸻
