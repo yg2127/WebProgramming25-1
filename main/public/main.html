@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Senior Health Assistant</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { display: flex; font-family: Arial, sans-serif; }
+
+    aside {
+      width: 200px;
+      height: 100vh;
+      position: fixed;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid #ccc;
+    }
+
+    .nav-buttons img {
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .login-section {
+      padding: 10px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .notification-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      width: 80px;
+    }
+
+    main {
+      margin-left: 200px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 20px;
+      width: calc(100% - 200px);
+    }
+
+    .upload-image, .event-image, .calendar-image {
+      width: 100%;
+      /*height: 300px;*/
+      object-fit: cover;
+      cursor: pointer;
+      border: 1px solid #ccc;
+    }
+
+    .right-panel {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 20px;
+    }
+
+    /* 팝업 스타일 */
+    #popup {
+      display: none;
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      background: white;
+      border: 2px solid #333;
+      padding: 20px;
+      z-index: 2000;
+    }
+
+    #popup input[type="file"] {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    #popup .close-btn {
+      float: right;
+      cursor: pointer;
+      color: red;
+    }
+
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fixed Header -->
+  <aside>
+    <div class="nav-buttons">
+      <img src="img/main-icon.png" alt="HOME" onclick="location.href='main.html'" />
+      <img src="img/docs-icon.png" alt="Health Documents" onclick="location.href='doc.html'" />
+      <img src="img/calendar-icon.png" alt="Calandar" onclick="location.href='cal.html'" />
+    </div>
+    <div class="login-section">
+      🔐 Logged In As: <strong>guest</strong>
+    </div>
+  </aside>
+
+  <!-- Notice -->
+  <img src="img/alert-icon.png" class="notification-btn" alt="Notice" onclick="alert('새 알림이 없음.')" />
+
+  <main>
+    <div>
+      <img src="img/upload-placeholder.png" class="upload-image" alt="Upload Document" onclick="openPopup()" />
+    </div>
+    <div class="right-panel">
+      <img src="img/event-placeholder.png" class="event-image" alt="Events" />
+      <img src="img/calendar-placeholder.png" class="calendar-image" alt="Cal" />
+    </div>
+  </main>
+
+  <!-- pop up -->
+  <div id="overlay"></div>
+  <div id="popup">
+    <span class="close-btn" onclick="closePopup()">✖</span>
+    <h3>Upload File</h3>
+    <form id="upload-form">
+      <div style="display: flex; gap: 20px;">
+        <div style="flex: 1;">
+          <label>Upload Image:</label>
+          <input type="file" accept="image/*" required />
+        </div>
+        <div style="flex: 1;">
+          <label>Hospital Name:</label><br/>
+          <input type="text" required /><br/><br/>
+          <label>Visited day:</label><br/>
+          <input type="date" required />
+        </div>
+      </div><br/>
+      <button type="submit">Upload :</button>
+    </form>
+  </div>
+
+  <script>
+    function openPopup() {
+      document.getElementById("popup").style.display = "block";
+      document.getElementById("overlay").style.display = "block";
+    }
+
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+      document.getElementById("overlay").style.display = "none";
+    }
+
+    document.getElementById("upload-form").onsubmit = function (e) {
+      e.preventDefault();
+      alert("Upload Success");
+      closePopup();
+      window.location.href = "analyze.html"; // 추후 분석 페이지 구현
+    };
+  </script>
+
+</body>
+</html>
