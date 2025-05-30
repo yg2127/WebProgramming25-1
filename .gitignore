@@ -2,30 +2,10 @@
 .idea/
 .vscode
 
-# Node.js 관련 파일 및 폴더
-main/node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-# package-lock.json 은 보통 팀원들과 동일한 의존성 버전을 유지하기 위해 커밋합니다.
-# 개인 프로젝트이고 특별한 이유가 없다면 커밋하는 것을 권장합니다.
-
-# 환경 변수 파일 (API 키 등 민감 정보)
 .env
 
-# 백엔드 폴더 내의 업로드 폴더
-# 사용자가 업로드한 파일들이 저장되는 곳이므로 Git에 포함하지 않습니다.
-backend/uploads/
+main/backend/uploads/
 
-# 백엔드 폴더 내의 SQLite 데이터베이스 파일
-# 로컬 개발용 데이터베이스 파일은 보통 Git에 포함하지 않습니다.
-backend/mydatabase.sqlite
+main/backend/mydatabase.sqlite
 
-# 운영체제(OS) 자동 생성 파일
-.DS_Store
-Thumbs.db
-*.swp # Vim 에디터 스왑 파일 (선택 사항)
-
-# 로그 파일 (만약 생성한다면)
-# logs/
-# *.log
+main/backend/node_modules/
