@@ -11,8 +11,10 @@ If you have any questions, feel free to contact the team leader or the instructo
 
 ### 1️⃣ Clone the repository
 
-git clone https://github.com/yg2127/DL_study.git  
-cd DL_study
+git clone https://github.com/yg2127/WebProgramming25-1
+ 
+cd WebProgramming25-1
+
 
 ### 2️⃣ Switch to `main` and update it
 
