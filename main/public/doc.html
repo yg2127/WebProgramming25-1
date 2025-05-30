@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Health Documents</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { display: flex; font-family: Arial, sans-serif; }
+
+    aside {
+      width: 200px;
+      height: 100vh;
+      position: fixed;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid #ccc;
+    }
+
+    .nav-buttons img {
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .login-section {
+      padding: 10px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    main {
+      margin-left: 200px;
+      padding: 20px;
+      width: calc(100% - 200px);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .gallery-item {
+      border: 1px solid #ccc;
+      padding: 10px;
+      background: #fafafa;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .info {
+      margin-top: 8px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- header -->
+  <aside>
+    <div class="nav-buttons">
+      <img src="img/main-icon.png" alt="HOME" onclick="location.href='main.html'" />
+      <img src="img/docs-icon.png" alt="Health Documents" onclick="location.href='doc.html'" />
+      <img src="img/calendar-icon.png" alt="Calandar" onclick="location.href='cal.html'" />
+    </div>
+    <div class="login-section">
+      🔐 Logged In As: <strong>guest</strong>
+    </div>
+  </aside>
+
+  <!-- 본문 -->
+  <main>
+    <h1>Health Documents</h1>
+
+    <div class="gallery">
+      <div class="gallery-item">
+        <img src="uploads/doc1.png" alt="업로드 문서" />
+        <div class="info">
+          병원: 서울의료원<br/>
+          날짜: 2025-05-28
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="uploads/doc2.png" alt="업로드 문서" />
+        <div class="info">
+          병원: 서울대학교병원<br/>
+          날짜: 2025-05-26
+        </div>
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>
