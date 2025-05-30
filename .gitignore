@@ -2,7 +2,7 @@
 .idea/
 .vscode
 
-.env
+main/.env
 
 main/backend/uploads/
 
