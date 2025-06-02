@@ -43,7 +43,7 @@ const CONFIG = {
     UPLOAD: {
         MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB in bytes
         ALLOWED_TYPES: ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'],
-        UPLOAD_ENDPOINT: '/api/upload'
+        UPLOAD_ENDPOINT: 'http://localhost:3001/api/upload'
     },
 
     // Notification Settings
