@@ -108,47 +108,54 @@
         </div>
     </section>
 
-    <!-- Document Upload Section -->
-    <section id="upload" class="upload-section">
-        <div class="container">
-            <h2 class="section-title">Upload Medical Documents</h2>
-            <div class="upload-container">
-                <div class="upload-area">
-                    <div class="upload-icon">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                    </div>
-                    <h3>Drag & Drop Files Here</h3>
-                    <p>Or click to browse files</p>
-                    <input type="file" id="file-input" multiple accept=".pdf,.jpg,.jpeg,.png">
-                    <button class="btn btn-primary">Choose Files</button>
-                </div>
-                <div class="upload-info">
-                    <h4>Supported Formats</h4>
-                    <ul>
-                        <li><i class="fas fa-file-pdf"></i> PDF Documents</li>
-                        <li><i class="fas fa-image"></i> JPG, PNG Images</li>
-                        <li><i class="fas fa-file-medical"></i> Medical Reports</li>
-                        <li><i class="fas fa-prescription"></i> Prescriptions</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="uploaded-files">
-                <h4>Recent Uploads</h4>
-                <div class="file-list">
-                    <div class="file-item">
-                        <i class="fas fa-file-pdf"></i>
-                        <span>Blood Test Results.pdf</span>
-                        <span class="file-status completed">Analyzed</span>
-                    </div>
-                    <div class="file-item">
-                        <i class="fas fa-image"></i>
-                        <span>X-Ray Scan.jpg</span>
-                        <span class="file-status processing">Processing</span>
-                    </div>
-                </div>
-            </div>
+    <!-- index.html: Upload 섹션 일부 -->
+<section id="upload" class="upload-section">
+    <div class="container">
+    <h2 class="section-title">Upload Medical Documents</h2>
+    <div class="upload-container">
+        <div class="upload-area">
+        <div class="upload-icon">
+            <i class="fas fa-cloud-upload-alt"></i>
         </div>
-    </section>
+        <h3>Drag & Drop Files Here</h3>
+        <p>Or click to browse files</p>
+
+        <!-- 1) input 요소: 숨겨둡니다 (style="display: none;") -->
+        <input 
+            type="file" 
+            id="file-input" 
+            multiple 
+            accept=".pdf,.jpg,.jpeg,.png" 
+            style="display: none;"
+        />
+
+        <!-- 2) label 요소: 클릭하면 file-input 창이 열립니다 -->
+        <label for="file-input" class="btn btn-primary">
+            Choose Files
+        </label>
+        </div>
+
+        <div class="upload-info">
+        <h4>Supported Formats</h4>
+        <ul>
+            <li><i class="fas fa-file-pdf"></i> PDF Documents</li>
+            <li><i class="fas fa-image"></i> JPG, PNG Images</li>
+            <li><i class="fas fa-file-medical"></i> Medical Reports</li>
+            <li><i class="fas fa-prescription"></i> Prescriptions</li>
+        </ul>
+        </div>
+    </div>
+
+    <!-- 3) 업로드된 파일 목록을 렌더링할 빈 컨테이너 -->
+    <div class="uploaded-files">
+        <h4>Recent Uploads</h4>
+        <div class="file-list"></div>
+    </div>
+
+    <!-- (선택) AI 분석 결과를 보여줄 빈 컨테이너 -->
+    <div id="analysis-results" style="margin-top: 20px;"></div>
+    </div>
+</section>
 
     <!-- Medications Section -->
     <section id="medications" class="medications">

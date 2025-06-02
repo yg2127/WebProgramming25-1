@@ -142,45 +142,43 @@ function update3DModel(scrollPercent) {
     }
 }
 
-// File upload functionality
+
+
 function initFileUpload() {
     const uploadArea = document.querySelector('.upload-area');
-    const fileInput = document.getElementById('file-input');
-    const fileList = document.querySelector('.file-list');
+    const fileInput  = document.getElementById('file-input');
+    const fileList   = document.querySelector('.file-list');
 
-    // Click to upload
-    uploadArea.addEventListener('click', function() {
+    // Click to open file picker
+    uploadArea.addEventListener('click', () => {
         fileInput.click();
     });
 
-    // Drag and drop functionality
-    uploadArea.addEventListener('dragover', function(e) {
+    // Drag and drop visual feedback
+    uploadArea.addEventListener('dragover', (e) => {
         e.preventDefault();
         uploadArea.style.borderColor = '#2563eb';
         uploadArea.style.background = '#f0f9ff';
     });
-
-    uploadArea.addEventListener('dragleave', function(e) {
+    uploadArea.addEventListener('dragleave', (e) => {
         e.preventDefault();
         uploadArea.style.borderColor = '#d1d5db';
         uploadArea.style.background = 'transparent';
     });
-
-    uploadArea.addEventListener('drop', function(e) {
+    uploadArea.addEventListener('drop', (e) => {
         e.preventDefault();
         uploadArea.style.borderColor = '#d1d5db';
         uploadArea.style.background = 'transparent';
-        
-        const files = e.dataTransfer.files;
-        handleFileUpload(files);
+        handleFileUpload(e.dataTransfer.files);
     });
 
-    // File input change
-    fileInput.addEventListener('change', function(e) {
+    // File input change event
+    fileInput.addEventListener('change', (e) => {
         handleFileUpload(e.target.files);
     });
 
-    function handleFileUpload(files) {
+    // Handle selected files
+    async function handleFileUpload(files) {
         Array.from(files).forEach(file => {
             // Validate file type
             if (!CONFIG.UPLOAD.ALLOWED_TYPES.includes(file.type)) {
@@ -190,40 +188,79 @@ function initFileUpload() {
 
             // Validate file size
             if (file.size > CONFIG.UPLOAD.MAX_FILE_SIZE) {
-                alert(`File size exceeds ${CONFIG.UPLOAD.MAX_FILE_SIZE / 1024 / 1024}MB limit`);
+                const maxMB = CONFIG.UPLOAD.MAX_FILE_SIZE / 1024 / 1024;
+                alert(`File size exceeds ${maxMB.toFixed(1)}MB limit`);
                 return;
             }
 
-            // Add file to list
-            addFileToList(file);
-            
-            // Simulate upload process
-            simulateUpload(file);
+            // Add file to the visible list with a 'Processing' status
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.innerHTML = `
+                <i class="fas fa-${file.type.includes('pdf') ? 'file-pdf' : 'image'}"></i>
+                <span>${file.name}</span>
+                <span class="file-status processing">Processing</span>
+            `;
+            fileList.appendChild(fileItem);
+
+            // Upload file to the backend
+            uploadFileToServer(file, fileItem);
         });
     }
 
-    function addFileToList(file) {
-        const fileItem = document.createElement('div');
-        fileItem.className = 'file-item';
-        fileItem.innerHTML = `
-            <i class="fas fa-${file.type.includes('pdf') ? 'file-pdf' : 'image'}"></i>
-            <span>${file.name}</span>
-            <span class="file-status processing">Processing</span>
-        `;
-        fileList.appendChild(fileItem);
+    // Upload a single file to the server and update status
+    async function uploadFileToServer(file, fileItem) {
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const response = await fetch(CONFIG.UPLOAD.UPLOAD_ENDPOINT, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error(`Server responded with status ${response.status}`);
+            }
+
+            const json = await response.json();
+            if (json.success) {
+                const statusSpan = fileItem.querySelector('.file-status');
+                statusSpan.textContent = 'Analyzed';
+                statusSpan.className = 'file-status completed';
+
+                // Optionally display the analysis result in a separate section:
+                // appendResult(json.data);
+            } else {
+                const statusSpan = fileItem.querySelector('.file-status');
+                statusSpan.textContent = 'Error';
+                statusSpan.className = 'file-status error';
+                console.error('Upload failed:', json);
+            }
+        } catch (err) {
+            console.error('Error uploading file:', err);
+            const statusSpan = fileItem.querySelector('.file-status');
+            statusSpan.textContent = 'Error';
+            statusSpan.className = 'file-status error';
+        }
     }
 
-    function simulateUpload(file) {
-        // Simulate upload progress
-        setTimeout(() => {
-            const fileItems = document.querySelectorAll('.file-item');
-            const lastItem = fileItems[fileItems.length - 1];
-            const status = lastItem.querySelector('.file-status');
-            status.textContent = 'Analyzed';
-            status.className = 'file-status completed';
-        }, 3000);
+    // Optional: Append AI analysis result to a separate container
+    
+    function appendResult(aiData) {
+        const resultContainer = document.querySelector('#analysis-results');
+        const container = document.createElement('div');
+        container.className = 'analysis-item';
+        container.innerHTML = `
+            <h4>File: ${aiData.filename}</h4>
+            <pre>${JSON.stringify(aiData.analysis, null, 2)}</pre>
+        `;
+        resultContainer.appendChild(container);
     }
+    
 }
+
+
 
 // Calendar functionality
 function initCalendar() {
