@@ -50,16 +50,40 @@ analyzeBtn.addEventListener('click', async () => {
     }
 });
 
-// 성공 결과를 표시하는 함수
+// 성공 결과를 표시하는 함수 (업그레이드 버전)
 function displayResults(data) {
     const prescriptionDate = data.prescriptionDate || "Not found";
-    const followupDate = data.followupDate || "Not found";
+    const followupDate = data.revisitDate || "Not found";
+
+    // 약 목록 부분을 동적으로 생성
+    let medicationListHtml = '';
+    if (data.medications && data.medications.length > 0) {
+        data.medications.forEach(med => {
+            medicationListHtml += `
+                <div class="medication-item" style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px;">
+                    <strong>${med.name}</strong>
+                    <ul style="margin: 5px 0 0 20px; padding: 0;">
+                        <li>Dosage: ${med.dosage}</li>
+                        <li>Duration: ${med.duration}</li>
+                    </ul>
+                </div>
+            `;
+        });
+    } else {
+        medicationListHtml = '<p>No medication details found.</p>';
+    }
+
+    // 최종 HTML 조합
     let html = `
         <h3>📋 Prescription Analysis Results</h3>
-        <ul>
-            <li><strong>Issued Date:</strong> ${prescriptionDate}</li>
-            <li><strong>Follow-up Date:</strong> ${followupDate}</li>
-        </ul>`;
+        <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px;">
+            <p><strong>Issued Date:</strong> ${prescriptionDate}</p>
+            <p><strong>Follow-up Date:</strong> ${followupDate}</p>
+            <hr>
+            <h4>Medication Details</h4>
+            ${medicationListHtml}
+        </div>
+    `;
     resultsDiv.innerHTML = html;
 }
 
