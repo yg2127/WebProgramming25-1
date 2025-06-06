@@ -2,11 +2,7 @@
 .idea/
 .vscode
 
-main/.env
+main/frontend2/.env
 
-main/backend/uploads/
-
-main/backend/mydatabase.sqlite
-
-main/backend/node_modules/
 main/node_modules
+main/frontend2/gen-lang-client-0423766694-c98045539d9d.json
