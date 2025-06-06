@@ -1,4 +1,7 @@
 // backend/server.js
+const express = require('express');
+const app = express();
+// ── CORS 설정 ────────────────────────────────────────────────────────────────
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -8,12 +11,10 @@ app.use((req, res, next) => {
 });
 
 require('dotenv').config();                  // ─ .env 로딩
-const express = require('express');
 const multer  = require('multer');
 const path    = require('path');
 const fs      = require('fs');
 const { GoogleGenAI } = require('@google/genai');  // Gemini용 SDK
-const app = express();
 const PORT = 3001;
 
 // ───────── 1) Multer 설정 ───────────────────────────────────────────────────
