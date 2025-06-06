@@ -22,6 +22,14 @@ body {
     padding: 0 20px;
 }
 
+/* 이벤트가 있는 날짜에 적용될 하이라이트 스타일 */
+.calendar-day.event-day {
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
 /* Navigation Styles */
 .navbar {
     position: fixed;
