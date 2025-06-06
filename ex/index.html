@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 이미지 분석 사이트</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8f9fa; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background-color: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); text-align: center; width: 450px; }
+        h1 { font-weight: 700; margin-bottom: 25px; }
+        input[type="file"] { margin-bottom: 15px; }
+        button { width: 100%; padding: 12px; border: none; border-radius: 8px; color: white; cursor: pointer; font-size: 16px; font-weight: 700; transition: background-color 0.2s; margin-top: 10px; }
+        .btn-primary { background-color: #0d6efd; }
+        .btn-primary:hover { background-color: #0b5ed7; }
+        img { max-width: 100%; max-height: 300px; margin-top: 20px; border-radius: 8px; border: 1px solid #eee; }
+        #results { margin-top: 20px; padding: 15px; background-color: #f0f0f0; border-radius: 8px; text-align: left; }
+        #results ul { padding-left: 20px; margin: 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI 이미지 분석</h1>
+        <p>분석하고 싶은 이미지를 선택하세요.</p>
+        <input type="file" id="fileInput" accept="image/*">
+        <button id="analyze-btn" class="btn-primary">🧠 AI로 분석하기</button>
+        <img id="thumbnail" src="">
+        <div id="results">AI 분석 결과가 여기에 표시됩니다.</div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const analyzeBtn = document.getElementById('analyze-btn');
+        const thumbnail = document.getElementById('thumbnail');
+        const resultsDiv = document.getElementById('results');
+
+        // 파일 선택 시 썸네일 보여주기
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    thumbnail.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 'Analyze with AI' 버튼 클릭 이벤트 (내부 로직 수정)
+        analyzeBtn.addEventListener('click', async () => {
+            const file = fileInput.files[0];
+            if (!file) return alert('Please select an image to analyze!');
+            
+            const formData = new FormData();
+            formData.append('image', file);
+            resultsDiv.innerHTML = 'AI is analyzing the image... 🧐';
+
+            try {
+                const response = await fetch('/analyze', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                // 응답을 일단 JSON으로 변환합니다.
+                const data = await response.json();
+
+                // response.ok는 HTTP 상태 코드가 200-299 범위일 때 true가 됩니다.
+                if (!response.ok) {
+                    // 서버가 500 에러 등을 보냈을 경우, 여기서 처리합니다.
+                    displayDetailedError(data); // 서버가 보낸 상세 에러 정보를 표시
+                } else {
+                    // 성공했을 경우, 정상 결과를 표시합니다.
+                    displayResults(data);
+                }
+
+            } catch (error) {
+                // 네트워크 오류 등 fetch 자체가 실패한 경우
+                console.error('Fetch failed:', error);
+                resultsDiv.innerHTML = 'Could not connect to the server. Please check if the server is running.';
+            }
+        });
+
+        // [수정] 성공 결과를 표시하는 함수
+        function displayResults(data) {
+            const prescriptionDate = data.prescriptionDate || "Not found";
+            const followupDate = data.followupDate || "Not found";
+
+            let html = `
+                <h3>📋 Prescription Analysis Results</h3>
+                <ul>
+                    <li><strong>Issued Date:</strong> ${prescriptionDate}</li>
+                    <li><strong>Follow-up Date:</strong> ${followupDate}</li>
+                </ul>
+            `;
+            resultsDiv.innerHTML = html;
+        }
+
+        // [새로운 함수] 상세 에러를 화면에 그려주는 함수
+        function displayDetailedError(errorData) {
+            let html = `
+                <h3><font color="red">🚨 An Error Occurred on the Server!</font></h3>
+                <pre style="white-space: pre-wrap; text-align: left; background-color: #fdd; padding: 10px; border-radius: 5px; border: 1px solid red;">
+    <b>Error Name:</b> ${errorData.error_name}
+    <b>Message:</b> ${errorData.error_message}
+    <b>Stack Trace:</b>
+    ${errorData.error_stack}
+                </pre>
+            `;
+            resultsDiv.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

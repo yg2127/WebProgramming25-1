@@ -9,3 +9,4 @@ main/backend/uploads/
 main/backend/mydatabase.sqlite
 
 main/backend/node_modules/
+main/node_modules
