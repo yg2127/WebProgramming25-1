@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Doctor - Medical Summary & Medication Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>AI Doctor</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#hero" class="nav-link">Home</a></li>
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#upload" class="nav-link">Upload</a></li>
+                <li><a href="#medications" class="nav-link">Medications</a></li>
+                <li><a href="#calendar" class="nav-link">Calendar</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 3D Model Container -->
+    <div class="model-container">
+        <div class="sketchfab-embed-wrapper">
+            <iframe id="skeleton-model" title="Human Skeleton Highresolution model" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/657a31ed9704423c8c4e752fb2506a74/embed?autospin=1&autostart=1&camera=0&preload=1&transparent=1&ui_hint=0"> </iframe>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">AI Doctor for Seniors</h1>
+            <p class="hero-subtitle">Medical Summary & Medication Tracker</p>
+            <p class="hero-description">
+                Simplifying healthcare management with AI-powered document analysis, 
+                medication tracking, and elder-friendly interface design.
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary">Get Started</button>
+                <button class="btn btn-secondary">Learn More</button>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Comprehensive Healthcare Management</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <h3>Document Upload & OCR</h3>
+                    <p>Upload medical documents and images. Our AI extracts text and analyzes medical information automatically.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <h3>Medication Tracking</h3>
+                    <p>Smart medication reminders with dosage tracking and guardian notifications for missed doses.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Appointment Calendar</h3>
+                    <p>Manage hospital visits and medical appointments with integrated calendar and reminder system.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI Analysis</h3>
+                    <p>Advanced AI compares medical documents, identifies patterns, and provides health insights.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-medical"></i>
+                    </div>
+                    <h3>Medical Terms</h3>
+                    <p>Simple explanations for complex medical terminology, designed for elderly users.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Guardian Alerts</h3>
+                    <p>Automatic notifications to family members for important health updates and emergencies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Document Upload Section -->
+    <section id="upload" class="upload-section">
+        <div class="container">
+            <h2 class="section-title">Upload Medical Documents</h2>
+            <div class="upload-container">
+                <div class="upload-area">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h3>Drag & Drop Files Here</h3>
+                    <p>Or click to browse files</p>
+                    <input type="file" id="file-input" multiple accept=".pdf,.jpg,.jpeg,.png">
+                    <button class="btn btn-primary">Choose Files</button>
+                </div>
+                <div class="upload-info">
+                    <h4>Supported Formats</h4>
+                    <ul>
+                        <li><i class="fas fa-file-pdf"></i> PDF Documents</li>
+                        <li><i class="fas fa-image"></i> JPG, PNG Images</li>
+                        <li><i class="fas fa-file-medical"></i> Medical Reports</li>
+                        <li><i class="fas fa-prescription"></i> Prescriptions</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="uploaded-files">
+                <h4>Recent Uploads</h4>
+                <div class="file-list">
+                    <div class="file-item">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>Blood Test Results.pdf</span>
+                        <span class="file-status completed">Analyzed</span>
+                    </div>
+                    <div class="file-item">
+                        <i class="fas fa-image"></i>
+                        <span>X-Ray Scan.jpg</span>
+                        <span class="file-status processing">Processing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Medications Section -->
+    <section id="medications" class="medications">
+        <div class="container">
+            <h2 class="section-title">Medication Management</h2>
+            <div class="medication-dashboard">
+                <div class="medication-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon completed">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>2</h3>
+                            <p>Taken Today</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon pending">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>1</h3>
+                            <p>Upcoming</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon missed">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>0</h3>
+                            <p>Missed</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="medication-list">
+                    <div class="medication-item">
+                        <div class="medication-info">
+                            <h4>Aspirin</h4>
+                            <p>100mg • Once daily</p>
+                            <span class="next-dose">Next: Tomorrow 8:00 AM</span>
+                        </div>
+                        <div class="medication-status taken">
+                            <i class="fas fa-check"></i>
+                            <span>Taken</span>
+                        </div>
+                    </div>
+                    <div class="medication-item">
+                        <div class="medication-info">
+                            <h4>Metformin</h4>
+                            <p>500mg • Twice daily</p>
+                            <span class="next-dose">Next: Today 2:00 PM</span>
+                        </div>
+                        <div class="medication-status pending">
+                            <i class="fas fa-clock"></i>
+                            <span>Pending</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section id="calendar" class="calendar-section">
+        <div class="container">
+            <h2 class="section-title">Appointment Calendar</h2>
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button class="calendar-nav" id="prev-month">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h3 id="current-month">January 2024</h3>
+                    <button class="calendar-nav" id="next-month">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-day header">Sun</div>
+                    <div class="calendar-day header">Mon</div>
+                    <div class="calendar-day header">Tue</div>
+                    <div class="calendar-day header">Wed</div>
+                    <div class="calendar-day header">Thu</div>
+                    <div class="calendar-day header">Fri</div>
+                    <div class="calendar-day header">Sat</div>
+                    <!-- Calendar days will be generated by JavaScript -->
+                </div>
+                <div class="upcoming-appointments">
+                    <h4>Upcoming Appointments</h4>
+                    <div class="appointment-item">
+                        <div class="appointment-date">
+                            <span class="day">15</span>
+                            <span class="month">Jan</span>
+                        </div>
+                        <div class="appointment-info">
+                            <h5>General Checkup</h5>
+                            <p>Dr. Smith • 10:00 AM</p>
+                            <span class="location">City Hospital</span>
+                        </div>
+                    </div>
+                    <div class="appointment-item">
+                        <div class="appointment-date">
+                            <span class="day">22</span>
+                            <span class="month">Jan</span>
+                        </div>
+                        <div class="appointment-info">
+                            <h5>Eye Examination</h5>
+                            <p>Dr. Johnson • 2:00 PM</p>
+                            <span class="location">Vision Center</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>support@aidoctor.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>123 Healthcare Ave, Medical City, MC 12345</span>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>AI Doctor</h4>
+                    <p>Empowering seniors with AI-driven healthcare management solutions.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#upload">Upload</a></li>
+                        <li><a href="#medications">Medications</a></li>
+                        <li><a href="#calendar">Calendar</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AI Doctor. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+
+    <form id="add-appointment-form">
+        <input type="text" id="appointment-title" placeholder="Title" required>
+        <input type="text" id="appointment-doctor" placeholder="Doctor" required>
+        <input type="text" id="appointment-location" placeholder="Location" required>
+        <input type="datetime-local" id="appointment-date" required>
+        <button type="submit">Add Appointment</button>
+    </form>
+</body>
+</html>
