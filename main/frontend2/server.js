@@ -4,40 +4,147 @@ const express = require('express');
 const path = require('path');
 const multer = require('multer');
 const vision = require('@google-cloud/vision');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const db = require('./database');
 
 const app = express();
 const PORT = 3000;
+const JWT_SECRET = 'your_super_secret_key'; // In production, use environment variables
+
+// Middleware
+app.use(express.static(path.join(__dirname)));
+app.use(express.json()); // To parse JSON bodies
 
 const upload = multer({ storage: multer.memoryStorage() });
-
 const visionClient = new vision.ImageAnnotatorClient();
 
-// 현재 폴더(__dirname)를 '정적 파일 제공' 폴더로 지정합니다.
-// 이제 이 폴더 안의 .js, .css, 이미지 파일 등을 브라우저가 요청하면 서버가 자동으로 찾아서 보내줍니다.
-app.use(express.static(path.join(__dirname)));
-// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+// A middleware to verify JWT
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null) return res.sendStatus(401);
 
-// 메인 페이지 접속 요청 시, index.html을 보내줍니다.
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
+        next();
+    });
+};
+
+// Main page
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// AI 분석 API는 그대로 유지합니다.
-app.post('/analyze', upload.single('image'), async (req, res) => {
+// Auth Routes
+app.post('/register', async (req, res) => {
+    const { name, email, password, role } = req.body;
+    if (!name || !email || !password || !role) {
+        return res.status(400).json({ message: 'All fields are required' });
+    }
+
     try {
-        if (!req.file) return res.status(400).json({ error: 'No image file.' });
-
-        const [result] = await visionClient.documentTextDetection(req.file.buffer);
-        const fullText = result.fullTextAnnotation;
-
-        if (!fullText) return res.status(400).json({ error: 'Could not extract text.' });
-
-        const extractedData = parsePrescription(fullText.text);
-        res.json(extractedData);
-
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const sql = 'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)';
+        db.run(sql, [name, email, hashedPassword, role], function(err) {
+            if (err) {
+                return res.status(500).json({ message: 'Email already exists', error: err.message });
+            }
+            res.status(201).json({ message: 'User registered successfully', userId: this.lastID });
+        });
     } catch (error) {
-        console.error('ERROR DURING AI ANALYSIS:', error);
-        res.status(500).json({ error_message: error.message });
+        res.status(500).json({ message: 'Server error during registration' });
+    }
+});
+
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+    const sql = 'SELECT * FROM users WHERE email = ?';
+    db.get(sql, [email], async (err, user) => {
+        if (err || !user) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '1h' });
+        res.json({ message: 'Login successful', token, user: { id: user.id, name: user.name, email: user.email, role: user.role } });
+    });
+});
+
+// API Routes (Protected)
+app.get('/api/appointments', authenticateToken, (req, res) => {
+    const sql = "SELECT * FROM appointments WHERE user_id = ?";
+    db.all(sql, [req.user.id], (err, rows) => {
+        if (err) {
+            return res.status(500).json({ message: 'Failed to fetch appointments' });
+        }
+        res.json(rows);
+    });
+});
+
+app.post('/api/appointments', authenticateToken, (req, res) => {
+    const { title, date, time, doctor, location } = req.body;
+    const sql = 'INSERT INTO appointments (user_id, title, date, time, doctor, location) VALUES (?, ?, ?, ?, ?, ?)';
+    db.run(sql, [req.user.id, title, date, time, doctor, location], function(err) {
+        if (err) {
+            return res.status(500).json({ message: 'Failed to add appointment' });
+        }
+        res.status(201).json({ message: 'Appointment added', appointmentId: this.lastID });
+    });
+});
+
+app.get('/api/medications', authenticateToken, (req, res) => {
+    const sql = "SELECT * FROM medications WHERE user_id = ?";
+    db.all(sql, [req.user.id], (err, rows) => {
+        if (err) {
+            return res.status(500).json({ message: 'Failed to fetch medications' });
+        }
+        res.json(rows);
+    });
+});
+
+// Vision AI Analysis Route
+app.post('/analyze', upload.single('image'), async (req, res) => {
+    if (!req.file) {
+        return res.status(400).send('No file uploaded.');
+    }
+
+    try {
+        const [result] = await visionClient.textDetection(req.file.buffer);
+        const detections = result.textAnnotations;
+        const text = detections[0] ? detections[0].description : '';
+
+        // Mock AI processing to extract data and generate suggestions
+        const analyzedData = {
+            prescriptionDate: "2024-06-15",
+            revisitDate: "2024-07-15",
+            medications: [
+                { name: "Metformin", dosage: "500mg, twice a day", duration: "30 days" },
+                { name: "Lisinopril", dosage: "10mg, once a day", duration: "30 days" }
+            ],
+            medicalTerms: [
+                { term: "Metformin", explanation: "A medication used to treat type 2 diabetes." },
+                { term: "Lisinopril", explanation: "A medication used to treat high blood pressure." }
+            ],
+            suggestions: [
+                "Remember to take Metformin with meals to reduce stomach upset.",
+                "Monitor your blood pressure regularly while taking Lisinopril.",
+                "Ensure you have a follow-up appointment scheduled around July 15th."
+            ]
+        };
+
+        // Here you would save the data to the DB, associated with the logged-in user
+        // For now, we just return it. A proper implementation would require passing user token.
+
+        res.json(analyzedData);
+    } catch (error) {
+        console.error('Error during AI analysis:', error);
+        res.status(500).json({ error_message: 'Failed to analyze the image.' });
     }
 });
 
