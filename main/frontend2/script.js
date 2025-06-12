@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         registerForm.addEventListener('submit', handleRegister);
 
         // Upload
-        uploadBox.addEventListener('click', () => fileInput.click());
+        // uploadBox.addEventListener('click', () => fileInput.click());
         uploadBox.addEventListener('dragover', handleDragOver);
         uploadBox.addEventListener('dragleave', handleDragLeave);
         uploadBox.addEventListener('drop', handleDrop);
