@@ -278,9 +278,7 @@ section {
 }
 
 /* Features Section */
-.features {
-    background: var(--bg-layer);
-}
+
 
 .features-grid {
     display: grid;
@@ -332,11 +330,7 @@ section {
 }
 
 /* Upload Section - New Styles */
-.upload-section {
-    padding: 100px 0;
-    text-align: center;
-    background-color: var(--bg-page);
-}
+
 
 .section-subtitle {
     font-size: 1.2rem;
@@ -364,6 +358,12 @@ section {
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+        /* ▼▼▼ 이 부분을 추가! ▼▼▼ */
+    /* Flexbox를 사용해서 내용물을 깔끔하게 정렬 */
+    display: flex;
+    flex-direction: column; /* 아이템들을 세로로 쌓음 */
+    align-items: center; /* 아이템들을 가로축 중앙에 배치 */
+    justify-content: center; /* 아이템들을 세로축 중앙에 배치 */
 }
 
 .upload-box.dragover {
@@ -409,10 +409,7 @@ section {
 }
 
 /* Results Sections */
-.results-section {
-    background: var(--bg-layer);
-    padding: 100px 0;
-}
+
 
 .results-grid {
     display: grid;
@@ -913,4 +910,177 @@ body.light-mode .calendar-day:not(.empty):hover {
 }
 .calendar-event.prescription:hover {
     filter: brightness(1.1);
+}
+
+/* style.css에 추가 */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: #1e1e1e; /* 다크모드 배경색과 동일하게 */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2); /* 스크롤 시 그림자 */
+}
+
+/* in style.css */
+
+/* ============================================= */
+/* Upload & Results Section Styles (Final Version) */
+/* ============================================= */
+
+/* in style.css */
+
+/* ============================================= */
+/* Upload & Results Section Styles (Final Unified Version) */
+/* ============================================= */
+
+/* in style.css */
+
+/* ================================================= */
+/* === SECTION UNIFICATION (The Final Boss) === */
+/* ================================================= */
+
+#upload {
+    padding: 80px 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.light-mode #upload {
+    background-color: #f4f7f9;
+    color: #1e1e1e;
+}
+
+body:not(.light-mode) #upload {
+    background-color: #191919;
+    color: rgba(255, 255, 255, 0.87);
+}
+
+/* 모든 섹션에 대한 공통 스타일 (히어로 섹션 제외) */
+.features,
+.upload-section, /* 예전 것도 포함 */
+.results-section, /* 예전 것도 포함 */
+#upload-results-section, /* 새로 만든 것도 포함 */
+.appointment-form-section,
+.login-register-section,
+.calendar-section,
+.contact,
+.medications {
+    padding: 100px 0;
+    transition: background-color 0.3s ease; /* 부드러운 전환 효과 */
+}
+
+/* --- 라이트 모드 배경색 설정 --- */
+body.light-mode .features,
+body.light-mode .results-section,
+body.light-mode .appointment-form-section,
+body.light-mode .login-register-section,
+body.light-mode .medications {
+    background-color: #f8f9fa; /* 밝은 회색 계열 */
+}
+
+body.light-mode #upload-results-section, /* 새 업로드 섹션 */
+body.light-mode .calendar-section,
+body.light-mode .contact {
+    background-color: #f4f7f9; /* 약간 다른 밝은 회색 */
+}
+
+/* --- 다크 모드 배경색 설정 --- */
+body:not(.light-mode) .features,
+body:not(.light-mode) .upload-section,
+body:not(.light-mode) .results-section,
+body:not(.light-mode) #upload-results-section,
+body:not(.light-mode) .appointment-form-section,
+body:not(.light-mode) .login-register-section,
+body:not(.light-mode) .calendar-section,
+body:not(.light-mode) .contact,
+body:not(.light-mode) .medications {
+    /* 모든 섹션의 배경색을 --bg-layer 변수로 통일! */
+    background-color: var(--bg-layer);
+}
+
+/* in style.css */
+
+/* 썸네일과 분석 버튼 중앙 정렬을 위한 수정 */
+.thumbnail-container {
+    text-align: center; /* 분석 버튼은 이걸로 가운데 왔음 */
+    margin-top: 20px;
+    min-height: 100px;
+    display: flex; /* Flexbox 레이아웃 사용 */
+    justify-content: center; /* 가로축 중앙 정렬 */
+    align-items: center; /* 세로축 중앙 정렬 (혹시 몰라서) */
+}
+
+.thumbnail-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin: 0 auto; /* 이미지 자체를 가운데로 보내는 또 다른 방법 (혹시 flexbox 안되면) */
+}
+
+.analyze-button-container {
+    text-align: center; /* 이 컨테이너 안의 분석 버튼을 가운데로 */
+    margin-top: 2rem;
+}
+
+/* in style.css */
+
+/* ============================================= */
+/* Medication Card Styles                      */
+/* ============================================= */
+
+/* 약물 카드들을 담는 그리드 컨테이너 */
+.medication-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* 개별 약물 카드 스타일 (result-card와 유사하게) */
+.medication-card {
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.medication-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.medication-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+}
+
+.medication-card h3 i {
+    margin-right: 12px;
+    font-size: 1.5rem;
+}
+
+.medication-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.medication-card li {
+    color: var(--text-default);
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.medication-card li strong {
+    color: var(--text-bold);
+    margin-right: 8px;
 }

@@ -384,6 +384,8 @@ function displayResults(data) {
     console.log("E. renderCalendar 호출 직전");
     renderCalendar();
     console.log("F. displayResults 모든 작업 완료!");
+
+    resultsDisplayWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
     // ======================================================
@@ -422,25 +424,40 @@ function displayResults(data) {
             console.error('Failed to fetch medications:', error);
         }
     }
+// in script.js
+// 기존 renderMedicationList 함수를 찾아서 아래 코드로 교체
 
-    function renderMedicationList(medications) {
-        medicationListContainer.innerHTML = ''; 
-        if (medications && medications.length > 0) {
-            medications.forEach(med => {
-                const medItem = document.createElement('div');
-                medItem.className = 'medication-item';
-                medItem.innerHTML = `
-                    <div class="medication-info">
-                        <h4>${med.name}</h4><p>${med.dosage}</p>
-                        <span class="next-dose">Duration: ${med.duration}</span>
-                    </div>
-                    <div class="medication-status pending"><i class="fas fa-clock"></i><span>Pending</span></div>`;
-                medicationListContainer.appendChild(medItem);
-            });
-        } else {
-            medicationListContainer.innerHTML = '<p style="text-align: center;">No medication details found.</p>';
-        }
+function renderMedicationList(medications) {
+    // 1. 컨테이너를 먼저 깨끗하게 비운다.
+    medicationListContainer.innerHTML = ''; 
+
+    if (medications && medications.length > 0) {
+        // 2. 약물 목록을 카드 그리드로 만들기 위해 부모 컨테이너에 클래스 추가
+        medicationListContainer.classList.add('medication-grid');
+
+        medications.forEach(med => {
+            // 3. 각 약물 정보를 담을 카드(div)를 생성
+            const medCard = document.createElement('div');
+            medCard.className = 'medication-card'; // result-card와 비슷한 새로운 클래스 부여
+
+            // 4. 카드 안에 들어갈 HTML 내용을 정의
+            medCard.innerHTML = `
+                <h3><i class="fas fa-pills"></i> ${med.name}</h3>
+                <ul>
+                    <li><strong>Dosage:</strong> ${med.dosage || 'Not specified'}</li>
+                    <li><strong>Duration:</strong> ${med.duration || 'Not specified'}</li>
+                </ul>
+            `;
+
+            // 5. 완성된 카드를 목록에 추가
+            medicationListContainer.appendChild(medCard);
+        });
+    } else {
+        // 약물이 없을 때를 대비해 그리드 클래스 제거
+        medicationListContainer.classList.remove('medication-grid');
+        medicationListContainer.innerHTML = '<p style="text-align: center; width: 100%;">No medication details found.</p>';
     }
+}
     
     async function handleAddAppointment(e) {
         e.preventDefault();
@@ -545,4 +562,9 @@ function displayResults(data) {
 
     // Run on load
     initialize();
+});
+
+// setupEventListeners 함수 안에 추가
+document.querySelector('.hero-buttons .btn-primary').addEventListener('click', () => {
+    document.getElementById('upload-results-section').scrollIntoView({ behavior: 'smooth' });
 });
