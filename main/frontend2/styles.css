@@ -157,7 +157,7 @@ body.light-mode .navbar {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    color: white;
+    color: var(--text-bold); /* 'white' 대신 변수 사용 */
     position: relative;
     padding: 0 20px;
     text-align: center;
