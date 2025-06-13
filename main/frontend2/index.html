@@ -119,7 +119,7 @@
         </div>
     </section>
 
-<section id="upload" class="upload-section">
+<section id="upload">
     <div class="container">
         <h2 class="section-title">Upload & Analyze Document</h2>
         <p class="section-subtitle">Upload your medical document to have our AI analyze it.</p>
@@ -134,7 +134,7 @@
             <div id="file-preview"></div>
         </div>
         <div class="analyze-button-container">
-             <button id="analyzeBtn" class="btn btn-primary btn-lg">Analyze with AI</button>
+            <button id="analyzeBtn" class="btn btn-primary btn-lg">Analyze with AI</button>
         </div>
         <div id="status-message" style="text-align: center; margin-top: 20px; font-weight: bold; min-height: 24px;"></div>
     </div>
@@ -177,62 +177,57 @@
     </div>
 </section>
 
-<section id="add-appointment" class="appointment-form-section">
+<section id="schedule-dashboard" class="schedule-dashboard-section">
     <div class="container">
-        <h2 class="section-title">Add a New Appointment</h2>
-        <form id="appointment-form" class="styled-form">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="appointment-title">Appointment Title</label>
-                    <input type="text" id="appointment-title" name="title" placeholder="e.g., Annual Check-up" required>
-                </div>
-                <div class="form-group">
-                    <label for="appointment-date">Date</label>
-                    <input type="date" id="appointment-date" name="date" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="appointment-time">Time</label>
-                    <input type="time" id="appointment-time" name="time" required>
-                </div>
-                <div class="form-group">
-                    <label for="appointment-doctor">Doctor</label>
-                    <input type="text" id="appointment-doctor" name="doctor" placeholder="e.g., Dr. Smith">
+        <h2 class="section-title">Schedule Management</h2>
+        <div class="dashboard-layout">
+            
+            <div class="calendar-wrapper">
+                <div id="calendar" class="calendar-container-v2">
+                    <div class="calendar-header">
+                        <button class="calendar-nav" id="prev-month">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 id="current-month"></h3>
+                        <button class="calendar-nav" id="next-month">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar-grid calendar-weekdays">
+                        <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+                    </div>
+                    <div class="calendar-grid" id="calendar-days"></div>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="appointment-location">Location</label>
-                <input type="text" id="appointment-location" name="location" placeholder="e.g., General Hospital">
-            </div>
-            <button type="submit" class="btn btn-primary">Add to Calendar</button>
-        </form>
-    </div>
-</section>
 
-<section id="calendar" class="calendar-section">
-    <div class="container">
-        <h2 class="section-title">Appointment Calendar</h2>
-        <div class="calendar-container">
-            <div class="calendar-header">
-                <button class="calendar-nav" id="prev-month">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <h3 id="current-month"></h3>
-                <button class="calendar-nav" id="next-month">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+            <div class="form-wrapper">
+                <div id="appointment-form-card" class="appointment-form-card">
+                    <h4><i class="fas fa-plus-circle"></i> Add New Appointment</h4>
+                    <form id="appointment-form" class="styled-form-v2">
+                        <div class="form-group">
+                            <label for="appointment-title">Title</label>
+                            <input type="text" id="appointment-title" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointment-date">Date & Time</label>
+                            <div class="date-time-inputs">
+                                <input type="date" id="appointment-date" name="date" required>
+                                <input type="time" id="appointment-time" name="time" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointment-doctor">Doctor</label>
+                            <input type="text" id="appointment-doctor" name="doctor">
+                        </div>
+                        <div class="form-group">
+                            <label for="appointment-location">Location</label>
+                            <input type="text" id="appointment-location" name="location">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add to Calendar</button>
+                    </form>
+                </div>
             </div>
-            <div class="calendar-grid calendar-weekdays">
-                <div class="weekday">Sun</div>
-                <div class="weekday">Mon</div>
-                <div class="weekday">Tue</div>
-                <div class="weekday">Wed</div>
-                <div class="weekday">Thu</div>
-                <div class="weekday">Fri</div>
-                <div class="weekday">Sat</div>
-            </div>
-            <div class="calendar-grid" id="calendar-days"></div>
+
         </div>
     </div>
 </section>
