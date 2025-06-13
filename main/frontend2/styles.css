@@ -157,7 +157,7 @@ body.light-mode .navbar {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    color: white;
+    color: var(--text-bold); /* 'white' 대신 변수 사용 */
     position: relative;
     padding: 0 20px;
     text-align: center;
@@ -278,9 +278,7 @@ section {
 }
 
 /* Features Section */
-.features {
-    background: var(--bg-layer);
-}
+
 
 .features-grid {
     display: grid;
@@ -332,11 +330,7 @@ section {
 }
 
 /* Upload Section - New Styles */
-.upload-section {
-    padding: 100px 0;
-    text-align: center;
-    background-color: var(--bg-page);
-}
+
 
 .section-subtitle {
     font-size: 1.2rem;
@@ -364,6 +358,12 @@ section {
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+        /* ▼▼▼ 이 부분을 추가! ▼▼▼ */
+    /* Flexbox를 사용해서 내용물을 깔끔하게 정렬 */
+    display: flex;
+    flex-direction: column; /* 아이템들을 세로로 쌓음 */
+    align-items: center; /* 아이템들을 가로축 중앙에 배치 */
+    justify-content: center; /* 아이템들을 세로축 중앙에 배치 */
 }
 
 .upload-box.dragover {
@@ -409,10 +409,7 @@ section {
 }
 
 /* Results Sections */
-.results-section {
-    background: var(--bg-layer);
-    padding: 100px 0;
-}
+
 
 .results-grid {
     display: grid;
@@ -564,21 +561,29 @@ section {
   border: 6px solid var(--accent-primary);
 }
 
-/* Contact Section */
+/* in style.css */
+
+/* ============================================= */
+/* Contact Section Styles (Theme-Aware Version)  */
+/* ============================================= */
+
 .contact {
-    background: #1e1e1e;
+    /* 이제 배경색을 다른 섹션과 동일한 변수로 지정 */
+    background-color: var(--bg-layer); 
 }
 
 .contact-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
+    align-items: center;
 }
 
 .contact-info h3 {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
-    color: #ffffff;
+    /* 글자색을 변수로 지정 */
+    color: var(--text-bold); 
 }
 
 .contact-item {
@@ -586,20 +591,25 @@ section {
     align-items: center;
     gap: 1rem;
     margin-bottom: 1rem;
-    color: #b0b0b0;
+    /* 글자색을 변수로 지정 */
+    color: var(--text-default); 
 }
 
 .contact-item i {
-    color: #bb86fc;
+    color: var(--accent-primary);
     font-size: 1.2rem;
 }
 
 .contact-form {
-    background: #2c2c2c;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    /* 폼 배경색을 카드 변수로 지정 */
+    background: var(--bg-card); 
+    padding: 2.5rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
 }
+
+/* 폼 그룹, 라벨, 인풋 스타일은 이미 변수를 잘 사용하고 있으므로 그대로 둬도 좋아! */
+/* (만약 .contact-form 안의 .form-group 스타일이 따로 있었다면, 이 규칙에 통합되거나, 변수를 사용하도록 수정하면 됨) */
 
 .form-group {
     margin-bottom: 1.5rem;
@@ -913,4 +923,463 @@ body.light-mode .calendar-day:not(.empty):hover {
 }
 .calendar-event.prescription:hover {
     filter: brightness(1.1);
+}
+
+/* style.css에 추가 */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: #1e1e1e; /* 다크모드 배경색과 동일하게 */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2); /* 스크롤 시 그림자 */
+}
+
+/* in style.css */
+
+/* ============================================= */
+/* Upload & Results Section Styles (Final Version) */
+/* ============================================= */
+
+/* in style.css */
+
+/* ============================================= */
+/* Upload & Results Section Styles (Final Unified Version) */
+/* ============================================= */
+
+/* in style.css */
+
+/* ================================================= */
+/* === SECTION UNIFICATION (The Final Boss) === */
+/* ================================================= */
+
+#upload {
+    padding: 80px 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.light-mode #upload {
+    background-color: #f4f7f9;
+    color: #1e1e1e;
+}
+
+body:not(.light-mode) #upload {
+    background-color: #191919;
+    color: rgba(255, 255, 255, 0.87);
+}
+
+/* 모든 섹션에 대한 공통 스타일 (히어로 섹션 제외) */
+.features,
+.upload-section, /* 예전 것도 포함 */
+.results-section, /* 예전 것도 포함 */
+#upload-results-section, /* 새로 만든 것도 포함 */
+.appointment-form-section,
+.login-register-section,
+.calendar-section,
+.contact,
+.medications {
+    padding: 100px 0;
+    transition: background-color 0.3s ease; /* 부드러운 전환 효과 */
+}
+
+/* --- 라이트 모드 배경색 설정 --- */
+body.light-mode .features,
+body.light-mode .results-section,
+body.light-mode .appointment-form-section,
+body.light-mode .login-register-section,
+body.light-mode .medications {
+    background-color: #f8f9fa; /* 밝은 회색 계열 */
+}
+
+body.light-mode #upload-results-section, /* 새 업로드 섹션 */
+body.light-mode .calendar-section,
+body.light-mode .contact {
+    background-color: #f4f7f9; /* 약간 다른 밝은 회색 */
+}
+
+/* --- 다크 모드 배경색 설정 --- */
+body:not(.light-mode) .features,
+body:not(.light-mode) .upload-section,
+body:not(.light-mode) .results-section,
+body:not(.light-mode) #upload-results-section,
+body:not(.light-mode) .appointment-form-section,
+body:not(.light-mode) .login-register-section,
+body:not(.light-mode) .calendar-section,
+body:not(.light-mode) .contact,
+body:not(.light-mode) .medications {
+    /* 모든 섹션의 배경색을 --bg-layer 변수로 통일! */
+    background-color: var(--bg-layer);
+}
+
+/* in style.css */
+
+/* 썸네일과 분석 버튼 중앙 정렬을 위한 수정 */
+.thumbnail-container {
+    text-align: center; /* 분석 버튼은 이걸로 가운데 왔음 */
+    margin-top: 20px;
+    min-height: 100px;
+    display: flex; /* Flexbox 레이아웃 사용 */
+    justify-content: center; /* 가로축 중앙 정렬 */
+    align-items: center; /* 세로축 중앙 정렬 (혹시 몰라서) */
+}
+
+.thumbnail-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin: 0 auto; /* 이미지 자체를 가운데로 보내는 또 다른 방법 (혹시 flexbox 안되면) */
+}
+
+.analyze-button-container {
+    text-align: center; /* 이 컨테이너 안의 분석 버튼을 가운데로 */
+    margin-top: 2rem;
+}
+
+/* in style.css */
+
+/* ============================================= */
+/* Medication Card Styles                      */
+/* ============================================= */
+
+/* 약물 카드들을 담는 그리드 컨테이너 */
+.medication-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* 개별 약물 카드 스타일 (result-card와 유사하게) */
+.medication-card {
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.medication-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.medication-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+}
+
+.medication-card h3 i {
+    margin-right: 12px;
+    font-size: 1.5rem;
+}
+
+.medication-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.medication-card li {
+    color: var(--text-default);
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.medication-card li strong {
+    color: var(--text-bold);
+    margin-right: 8px;
+}
+
+/* in style.css */
+
+/* ============================================= */
+/* Schedule Dashboard Styles (Calendar & Form)   */
+/* ============================================= */
+
+.schedule-dashboard-section {
+    background-color: var(--bg-layer);
+    padding: 100px 0;
+}
+
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr; /* 캘린더를 더 넓게 */
+    gap: 40px;
+    align-items: flex-start;
+}
+
+/* New Calendar Styles */
+.calendar-container-v2 {
+    background-color: var(--bg-card);
+    border-radius: 16px;
+    padding: 25px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+body:not(.light-mode) .calendar-container-v2 {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 10px;
+}
+
+#current-month {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-bold);
+}
+
+.calendar-nav {
+    background: none;
+    border: none;
+    color: var(--text-default);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.calendar-nav:hover {
+    color: var(--accent-primary);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.calendar-weekdays {
+    font-weight: 600;
+    text-align: center;
+    padding-bottom: 10px;
+    color: var(--text-default);
+    font-size: 0.9rem;
+}
+
+.calendar-day {
+    min-height: 110px;
+    padding: 8px;
+    background-color: var(--bg-page);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.2s;
+    font-size: 0.85rem;
+}
+.calendar-day.empty {
+    background-color: transparent;
+    border: none;
+}
+.calendar-day:not(.empty):hover {
+    background-color: var(--bg-layer);
+}
+.day-number {
+    font-weight: 500;
+}
+.calendar-day.today .day-number {
+    background-color: var(--accent-primary);
+    color: var(--btn-primary-text);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Event Pill Styles */
+.calendar-events { margin-top: 5px; }
+.calendar-event {
+    padding: 3px 8px;
+    font-size: 0.75rem;
+    border-radius: 12px;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: var(--accent-secondary);
+    color: var(--btn-primary-text);
+}
+.calendar-event.prescription {
+    background-color: var(--link-color);
+    color: var(--bg-page);
+}
+.calendar-event.revisit {
+    background-color: #03dac6; /* Teal color for revisit */
+    color: #111;
+}
+
+/* New Appointment Form Styles */
+.appointment-form-card {
+    background-color: var(--bg-card);
+    border-radius: 16px;
+    padding: 25px;
+    border: 1px solid var(--border-color);
+    position: sticky; /* 스크롤 따라오게 */
+    top: 120px;
+}
+.appointment-form-card h4 {
+    font-size: 1.2rem;
+    margin: 0 0 20px 0;
+    color: var(--text-bold);
+}
+.appointment-form-card h4 i {
+    margin-right: 10px;
+    color: var(--accent-primary);
+}
+.styled-form-v2 .form-group {
+    margin-bottom: 1rem;
+}
+.styled-form-v2 label {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.styled-form-v2 input {
+    font-size: 0.95rem;
+    padding: 10px;
+}
+.styled-form-v2 .date-time-inputs {
+    display: flex;
+    gap: 10px;
+}
+.styled-form-v2 .btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* in style.css */
+
+/* ======================================================= */
+/* Dark Mode Fix for Date/Time Inputs (The Real Final) */
+/* ======================================================= */
+
+/* 다크 모드일 때 글자색, 배경색, 테두리 색을 명확하게 지정 */
+body:not(.light-mode) .styled-form-v2 input[type="date"],
+body:not(.light-mode) .styled-form-v2 input[type="time"] {
+    color: var(--text-default);
+    background-color: var(--bg-page);
+    border-color: var(--border-color);
+}
+
+/* Webkit 브라우저(크롬, 사파리)의 내장 아이콘을 직접 타겟팅 
+  - filter: 색상 반전 (검정->흰색)
+  - cursor: 아이콘 위에 마우스 올리면 손가락 모양으로 변경
+  - opacity: 아이콘을 더 선명하게
+*/
+body:not(.light-mode) input[type="date"]::-webkit-calendar-picker-indicator,
+body:not(.light-mode) input[type="time"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.8;
+    filter: invert(1);
+}
+
+/* 아이콘에 마우스를 올렸을 때 더 밝게 강조 */
+body:not(.light-mode) input[type="date"]::-webkit-calendar-picker-indicator:hover,
+body:not(.light-mode) input[type="time"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
+
+/* in style.css */
+
+/* ============================================= */
+/* Calendar Event Popover Styles               */
+/* ============================================= */
+
+.calendar-day {
+    position: relative; /* 팝오버의 기준점이 되도록 설정 */
+}
+
+.event-popover {
+    position: absolute;
+    z-index: 10;
+    left: 50%; /* 부모(날짜 칸)의 중앙에서 시작 */
+    bottom: 100%; /* 이벤트 바로 위쪽에 위치 */
+    transform: translateX(-50%) translateY(-10px); /* 위로 10px 더 올리고, 정확한 중앙정렬 */
+    
+    width: 260px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    
+    visibility: hidden; /* 평소엔 숨겨져 있음 */
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+}
+
+/* 팝오버가 나타날 때의 스타일 */
+.event-popover.visible {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) translateY(-15px); /* 살짝 위로 떠오르는 효과 */
+}
+
+/* 팝오버의 꼬리 만들기 */
+.event-popover::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px;
+    border-style: solid;
+    border-color: var(--bg-card) transparent transparent transparent;
+}
+body.light-mode .event-popover::after {
+    border-top-color: #fff;
+}
+
+
+/* 팝오버 내부 스타일 */
+.popover-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--text-default);
+    opacity: 0.7;
+}
+.popover-close:hover {
+    opacity: 1;
+}
+
+.event-popover h4 {
+    font-size: 1rem;
+    color: var(--text-bold);
+    margin: 0 0 15px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.event-popover ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.event-popover li {
+    font-size: 0.875rem;
+    color: var(--text-default);
+    margin-bottom: 8px;
+}
+
+.event-popover li strong {
+    color: var(--text-bold);
+    min-width: 70px;
+    display: inline-block;
 }

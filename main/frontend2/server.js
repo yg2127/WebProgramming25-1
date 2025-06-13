@@ -21,14 +21,26 @@ const visionClient = new vision.ImageAnnotatorClient();
 
 // A middleware to verify JWT
 const authenticateToken = (req, res, next) => {
+    // ★★★ 1. 인증 검문소 로그 ★★★
+    console.log("--- authenticateToken 미들웨어 실행됨 ---");
+
     const authHeader = req.headers['authorization'];
+    console.log("받은 Authorization 헤더:", authHeader); // 헤더가 잘 왔는지 확인
+    
     const token = authHeader && authHeader.split(' ')[1];
-    if (token == null) return res.sendStatus(401);
+    if (token == null) {
+        console.log("토큰이 없습니다. 401 Unauthorized 반환.");
+        return res.sendStatus(401); // Unauthorized
+    }
 
     jwt.verify(token, JWT_SECRET, (err, user) => {
-        if (err) return res.sendStatus(403);
+        if (err) {
+            console.log("JWT 토큰 검증 실패:", err.message);
+            return res.sendStatus(403); // Forbidden
+        }
+        console.log("토큰 검증 성공! user:", user);
         req.user = user;
-        next();
+        next(); // 검문소 통과! 다음 단계로 이동
     });
 };
 
@@ -71,7 +83,7 @@ app.post('/login', (req, res) => {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
-        const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '8h' }); // '1h' -> '8h' (8시간) 등으로 수정
         res.json({ message: 'Login successful', token, user: { id: user.id, name: user.name, email: user.email, role: user.role } });
     });
 });
@@ -108,45 +120,53 @@ app.get('/api/medications', authenticateToken, (req, res) => {
     });
 });
 
-// Vision AI Analysis Route
-app.post('/analyze', upload.single('image'), async (req, res) => {
+// Vision AI Analysis Route (디버깅 로그 추가 버전)
+app.post('/analyze', authenticateToken, upload.single('image'), async (req, res) => {
+    // ★★★ 2. analyze 라우트 진입 로그 ★★★
+    console.log("\n--- /analyze 라우트 핸들러 실행됨 ---");
+    console.log("인증 검문소 통과 후 req.user:", req.user); // 로그인한 유저 정보 확인
+
     if (!req.file) {
+        console.log("파일이 없습니다. 400 Bad Request 반환.");
         return res.status(400).send('No file uploaded.');
     }
+    console.log("파일 수신 성공:", req.file.originalname);
+
 
     try {
+        // ★★★ 3. Vision AI 호출 직전 로그 ★★★
+        console.log("--- Google Vision AI API 호출 시도... ---");
+
         const [result] = await visionClient.textDetection(req.file.buffer);
+        
+        console.log("--- Vision AI 응답 수신 성공! ---");
+
+        // ... (이하 로직은 일단 그대로) ...
         const detections = result.textAnnotations;
-        const text = detections[0] ? detections[0].description : '';
+        
+        if (!detections || detections.length === 0) {
+            return res.status(400).json({ error_message: 'No text found in the image.' });
+        }
+        const text = detections[0].description;
+        
+        // ★★★ 4. 최종 분석 직전 로그 ★★★
+        console.log("--- AI가 추출한 전체 텍스트 ---");
+        console.log(text.substring(0, 200) + "..."); // 너무 기니까 앞부분만 출력
+        console.log("---------------------------------");
+        console.log("parsePrescription 함수 호출 시도...");
 
-        // Mock AI processing to extract data and generate suggestions
-        const analyzedData = {
-            prescriptionDate: "2024-06-15",
-            revisitDate: "2024-07-15",
-            medications: [
-                { name: "Metformin", dosage: "500mg, twice a day", duration: "30 days" },
-                { name: "Lisinopril", dosage: "10mg, once a day", duration: "30 days" }
-            ],
-            medicalTerms: [
-                { term: "Metformin", explanation: "A medication used to treat type 2 diabetes." },
-                { term: "Lisinopril", explanation: "A medication used to treat high blood pressure." }
-            ],
-            suggestions: [
-                "Remember to take Metformin with meals to reduce stomach upset.",
-                "Monitor your blood pressure regularly while taking Lisinopril.",
-                "Ensure you have a follow-up appointment scheduled around July 15th."
-            ]
-        };
+        const analyzedData = parsePrescription(text);
 
-        // Here you would save the data to the DB, associated with the logged-in user
-        // For now, we just return it. A proper implementation would require passing user token.
+        console.log("parsePrescription 함수 실행 완료. 클라이언트에 결과 전송 시도...");
 
         res.json(analyzedData);
+        
     } catch (error) {
-        console.error('Error during AI analysis:', error);
+        console.error('🔥🔥🔥 /analyze 경로에서 심각한 에러 발생: 🔥🔥🔥', error);
         res.status(500).json({ error_message: 'Failed to analyze the image.' });
     }
 });
+
 
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
