@@ -2,7 +2,7 @@
 .idea/
 .vscode
 
-main/frontend2/.env
 
 main/node_modules
+main/frontend2/.env
 main/frontend2/gen-lang-client-0423766694-c98045539d9d.json

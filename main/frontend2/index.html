@@ -20,14 +20,25 @@
                 <li><a href="#hero" class="nav-link">Home</a></li>
                 <li><a href="#features" class="nav-link">Features</a></li>
                 <li><a href="#upload" class="nav-link">Upload</a></li>
+                <li><a href="#analysis" class="nav-link">AI Analysis</a></li>
                 <li><a href="#medications" class="nav-link">Medications</a></li>
                 <li><a href="#calendar" class="nav-link">Calendar</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#login" class="nav-link">Login</a></li>
             </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div class="nav-controls">
+                <div class="theme-switcher">
+                    <i class="fas fa-sun"></i>
+                    <label class="switch">
+                        <input type="checkbox" id="theme-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <i class="fas fa-moon"></i>
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </div>
     </nav>
@@ -62,71 +73,95 @@
         <div class="container">
             <h2 class="section-title">Comprehensive Healthcare Management</h2>
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card" data-target="upload">
                     <div class="feature-icon">
                         <i class="fas fa-upload"></i>
                     </div>
                     <h3>Document Upload & OCR</h3>
-                    <p>Upload medical documents and images. Our AI extracts text and analyzes medical information automatically.</p>
+                    <p>Upload medical documents. Our AI extracts and analyzes medical information automatically.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" data-target="analysis">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI Analysis & Suggestions</h3>
+                    <p>Advanced AI provides health insights and personalized suggestions based on your documents.</p>
+                </div>
+                <div class="feature-card" data-target="medications">
                     <div class="feature-icon">
                         <i class="fas fa-pills"></i>
                     </div>
                     <h3>Medication Tracking</h3>
-                    <p>Smart medication reminders with dosage tracking and guardian notifications for missed doses.</p>
+                    <p>Smart medication tracking based on your prescriptions, with dosage and duration.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" data-target="calendar">
                     <div class="feature-icon">
                         <i class="fas fa-calendar-alt"></i>
                     </div>
                     <h3>Appointment Calendar</h3>
-                    <p>Manage hospital visits and medical appointments with integrated calendar and reminder system.</p>
+                    <p>Manage appointments from documents and add your own, integrated with a reminder system.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h3>AI Analysis</h3>
-                    <p>Advanced AI compares medical documents, identifies patterns, and provides health insights.</p>
-                </div>
-                <div class="feature-card">
+                <div class="feature-card" data-target="terms">
                     <div class="feature-icon">
                         <i class="fas fa-book-medical"></i>
                     </div>
                     <h3>Medical Terms</h3>
                     <p>Simple explanations for complex medical terminology, designed for elderly users.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" data-target="login">
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Guardian Alerts</h3>
-                    <p>Automatic notifications to family members for important health updates and emergencies.</p>
+                    <h3>Guardian & Doctor Access</h3>
+                    <p>Securely share your health data with family members or your physician through our portal.</p>
                 </div>
             </div>
         </div>
     </section>
 
-<section id="upload" class="upload-section">
+<section id="upload">
     <div class="container">
         <h2 class="section-title">Upload & Analyze Document</h2>
-        <p style="text-align: center; margin-bottom: 30px;">
-            Select a medical document image to extract key information.
-        </p>
+        <p class="section-subtitle">Upload your medical document to have our AI analyze it.</p>
+        <div class="upload-container-new">
+            <div class="upload-box">
+                <div class="upload-icon-new"><i class="fas fa-cloud-upload-alt"></i></div>
+                <p>Drag & Drop your file here</p>
+                <span>or</span>
+                <input type="file" id="file-input" accept="image/*" style="display: none;">
+                <label for="file-input" class="btn btn-primary">Choose File</label>
+            </div>
+            <div id="file-preview"></div>
+        </div>
+        <div class="analyze-button-container">
+            <button id="analyzeBtn" class="btn btn-primary btn-lg">Analyze with AI</button>
+        </div>
+        <div id="status-message" style="text-align: center; margin-top: 20px; font-weight: bold; min-height: 24px;"></div>
+    </div>
+</section>
 
-        <div class="analyzer-box" style="padding: 30px; border: 2px dashed #ccc; border-radius: 10px; background-color: #f9f9f9;">
+<section id="analysis" class="results-section">
+    <div class="container">
+        <h2 class="section-title">AI Analysis & Suggestions</h2>
+        <div class="results-grid">
+            <div id="ai-summary-card" class="result-card">
+                <h3><i class="fas fa-file-invoice"></i> Analysis Summary</h3>
+                <p>Analysis results will be displayed here.</p>
+            </div>
+            <div id="ai-suggestions-card" class="result-card">
+                <h3><i class="fas fa-lightbulb"></i> AI Suggestions</h3>
+                <p>AI-powered suggestions will appear here after analysis.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-            <input type="file" id="file-input" accept="image/*" style="display: none;">
-
-            <label for="file-input" class="btn btn-primary">Choose File</label>
-
-            <button id="analyzeBtn" class="btn" style="background-color: #198754; margin-left: 10px;">Analyze with AI</button>
-
-            <img id="thumbnail" style="display: none; width: 100%; max-width: 500px; margin-top: 30px; border-radius: 8px; border: 1px solid #ddd;">
-
-            <div id="analysis-results" style="margin-top: 20px; text-align: left; font-size: 16px;"></div>
-
+<section id="terms" class="results-section">
+    <div class="container">
+        <h2 class="section-title">Medical Terms Explained</h2>
+        <div id="medical-terms-container" class="result-card">
+            <h3><i class="fas fa-book-medical"></i> Simplified Medical Terms</h3>
+            <p>Complex medical terms from your document will be explained here in simple language.</p>
         </div>
     </div>
 </section>
@@ -142,58 +177,114 @@
     </div>
 </section>
 
-    <!-- Calendar Section -->
-    <section id="calendar" class="calendar-section" style="display: none;">
-        <div class="container">
-            <h2 class="section-title">Appointment Calendar</h2>
-            <div class="calendar-container">
-                <div class="calendar-header">
-                    <button class="calendar-nav" id="prev-month">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <h3 id="current-month">January 2024</h3>
-                    <button class="calendar-nav" id="next-month">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-                <div class="calendar-grid">
-                    <div class="calendar-day header">Sun</div>
-                    <div class="calendar-day header">Mon</div>
-                    <div class="calendar-day header">Tue</div>
-                    <div class="calendar-day header">Wed</div>
-                    <div class="calendar-day header">Thu</div>
-                    <div class="calendar-day header">Fri</div>
-                    <div class="calendar-day header">Sat</div>
-                    <!-- Calendar days will be generated by JavaScript -->
-                </div>
-                <div class="upcoming-appointments">
-                    <h4>Upcoming Appointments</h4>
-                    <div class="appointment-item">
-                        <div class="appointment-date">
-                            <span class="day">15</span>
-                            <span class="month">Jan</span>
-                        </div>
-                        <div class="appointment-info">
-                            <h5>General Checkup</h5>
-                            <p>Dr. Smith • 10:00 AM</p>
-                            <span class="location">City Hospital</span>
-                        </div>
+<section id="schedule-dashboard" class="schedule-dashboard-section">
+    <div class="container">
+        <h2 class="section-title">Schedule Management</h2>
+        <div class="dashboard-layout">
+            
+            <div class="calendar-wrapper">
+                <div id="calendar" class="calendar-container-v2">
+                    <div class="calendar-header">
+                        <button class="calendar-nav" id="prev-month">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 id="current-month"></h3>
+                        <button class="calendar-nav" id="next-month">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
-                    <div class="appointment-item">
-                        <div class="appointment-date">
-                            <span class="day">22</span>
-                            <span class="month">Jan</span>
-                        </div>
-                        <div class="appointment-info">
-                            <h5>Eye Examination</h5>
-                            <p>Dr. Johnson • 2:00 PM</p>
-                            <span class="location">Vision Center</span>
-                        </div>
+                    <div class="calendar-grid calendar-weekdays">
+                        <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
                     </div>
+                    <div class="calendar-grid" id="calendar-days"></div>
                 </div>
             </div>
+
+            <div class="form-wrapper">
+                <div id="appointment-form-card" class="appointment-form-card">
+                    <h4><i class="fas fa-plus-circle"></i> Add New Appointment</h4>
+                    <form id="appointment-form" class="styled-form-v2">
+                        <div class="form-group">
+                            <label for="appointment-title">Title</label>
+                            <input type="text" id="appointment-title" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointment-date">Date & Time</label>
+                            <div class="date-time-inputs">
+                                <input type="date" id="appointment-date" name="date" required>
+                                <input type="time" id="appointment-time" name="time" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointment-doctor">Doctor</label>
+                            <input type="text" id="appointment-doctor" name="doctor">
+                        </div>
+                        <div class="form-group">
+                            <label for="appointment-location">Location</label>
+                            <input type="text" id="appointment-location" name="location">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add to Calendar</button>
+                    </form>
+                </div>
+            </div>
+
         </div>
-    </section>
+    </div>
+</section>
+
+    <!-- Login/Register Section -->
+<section id="login" class="login-register-section">
+    <div class="container">
+        <h2 class="section-title">Access Your Health Portal</h2>
+        <div class="auth-container">
+            <div class="auth-tabs">
+                <button class="tab-link active" data-tab="login">Login</button>
+                <button class="tab-link" data-tab="register">Register</button>
+            </div>
+
+            <div id="login-tab" class="auth-tab-content active">
+                <form id="login-form" class="styled-form">
+                    <h3>Login to Your Account</h3>
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+
+            <div id="register-tab" class="auth-tab-content">
+                <form id="register-form" class="styled-form">
+                    <h3>Create a New Account</h3>
+                    <div class="form-group">
+                        <label for="register-name">Full Name</label>
+                        <input type="text" id="register-name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Register as:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="role" value="patient" checked> Patient</label>
+                            <label><input type="radio" name="role" value="doctor"> Doctor</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 
     <!-- Contact Section -->
     <section id="contact" class="contact">
